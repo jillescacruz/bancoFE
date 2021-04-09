@@ -27,6 +27,9 @@ import { NewDestinataryComponent } from './component/new-destinatary/new-destina
 import { HeaderComponent } from './component/header/header.component';
 import { HistoricalMovementsComponent } from './component/historical-movements/historical-movements.component';
 import { TransferComponent } from './component/transfer/transfer.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogRutComponent } from './component/dialog-rut/dialog-rut.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import { TransferComponent } from './component/transfer/transfer.component';
     NewDestinataryComponent,
     HeaderComponent,
     HistoricalMovementsComponent,
-    TransferComponent
+    TransferComponent,
+    DialogRutComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,8 @@ import { TransferComponent } from './component/transfer/transfer.component';
     HttpClientModule,
     MatTableModule,
     MatAutocompleteModule,
-    MatCardModule    
+    MatCardModule,
+    MatDialogModule    
   ],
   providers: [],
   bootstrap: [AppComponent]
