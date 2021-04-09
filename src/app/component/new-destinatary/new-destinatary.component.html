@@ -4,8 +4,7 @@
     </mat-card-header>
     <mat-card-content>
         <table mat-table [dataSource]="destinataries" class="mat-elevation-z8">
-
-   
+  
             <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -13,12 +12,12 @@
         
             <ng-container matColumnDef="bankCode">
             <th mat-header-cell *matHeaderCellDef> Banco </th>
-            <td mat-cell *matCellDef="let element"> {{element.bankCode}} </td>
+            <td mat-cell *matCellDef="let element"> {{getBankName(element?.bankCode)}} </td>
             </ng-container>
         
             <ng-container matColumnDef="accountType">
             <th mat-header-cell *matHeaderCellDef> Tipo Cuenta </th>
-            <td mat-cell *matCellDef="let element"> {{element.accountType}} </td>
+            <td mat-cell *matCellDef="let element"> {{getAccountType(element?.accountType)}} </td>
             </ng-container>
         
             <ng-container matColumnDef="accountNumber">
@@ -47,13 +46,13 @@
                 <p>
                     <mat-form-field appearance="legacy">
                         <mat-label>Rut</mat-label>
-                        <input type="text" formControlName="rut" matInput placeholder="Rut">
+                        <input type="text" formControlName="rut" matInput placeholder="Rut" (blur)="validateRut($event)">
                     </mat-form-field>
                 </p>
                 <p>
                     <mat-form-field appearance="legacy">
                         <mat-label>Correo</mat-label>
-                        <input type="text" formControlName="email" matInput placeholder="Correo">
+                        <input type="email" formControlName="email" matInput placeholder="Correo">
                     </mat-form-field>
                 </p>
                 <p>
@@ -76,8 +75,12 @@
 
                 <p>
                     <mat-form-field appearance="legacy">
-                        <mat-label>Código Banco ****  CAMBIAR POR DATOS WS</mat-label>
-                        <input type="text" formControlName="bank" matInput placeholder="Banco">
+                        <mat-label>Seleccione Banco</mat-label>
+                        <mat-select formControlName="bank" name="bank">
+                            <mat-option *ngFor="let account of banks" [value]="account.id">
+                                {{account.name}}
+                            </mat-option>
+                            </mat-select>
                     </mat-form-field>
                 </p>
 

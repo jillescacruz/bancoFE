@@ -18,6 +18,9 @@ export class HeaderComponent implements OnInit {
   constructor(private clientService:ClientService) { }
 
   ngOnInit(): void {
+
+    localStorage.setItem('rut', '15840395-1JIC');
+
     this.clientService.getUserData('15840395').subscribe(
       (data:ResponseUserData)=>{
         console.log('USER DATA: '+data);
