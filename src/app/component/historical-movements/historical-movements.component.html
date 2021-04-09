@@ -1,0 +1,44 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>Movimientos Históricos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]="movements" class="mat-elevation-z8" matSort>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha</th>
+                <td mat-cell *matCellDef="let element"> {{element.date | date :'short'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre Destinatario</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="rutDestinataryWithOutVd">
+            <th mat-header-cell *matHeaderCellDef> Rut Destinatario </th>
+            <td mat-cell *matCellDef="let element"> {{element.rutDestinataryWithOutVd}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="bankCode">
+            <th mat-header-cell *matHeaderCellDef> Banco Destino </th>
+            <td mat-cell *matCellDef="let element"> {{element.bankCode}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="accountType">
+            <th mat-header-cell *matHeaderCellDef> Tipo de cuenta </th>
+            <td mat-cell *matCellDef="let element"> {{element.accountType}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Monto </th>
+                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+</mat-card>
