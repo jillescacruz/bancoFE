@@ -28,7 +28,7 @@ import { HeaderComponent } from './component/header/header.component';
 import { HistoricalMovementsComponent } from './component/historical-movements/historical-movements.component';
 import { TransferComponent } from './component/transfer/transfer.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { DialogRutComponent } from './component/dialog-rut/dialog-rut.component';
+import { DialogComponent } from './component/dialog/dialog.component';
 
 
 @NgModule({
@@ -39,7 +39,7 @@ import { DialogRutComponent } from './component/dialog-rut/dialog-rut.component'
     HeaderComponent,
     HistoricalMovementsComponent,
     TransferComponent,
-    DialogRutComponent
+    DialogComponent
   ],
   imports: [
     BrowserModule,

@@ -22,7 +22,7 @@ export class ClientService {
   }
 
   getUserData(id:string): Observable<ResponseUserData>{
-    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/clients/get/'+id;
+    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/'+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');
@@ -33,7 +33,7 @@ export class ClientService {
   }
 
   getDestinataries(id:string): Observable<ResponseDestinataries>{
-    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/clients/get/destinatary/'+id;
+    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/destinatary/'+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');
@@ -44,7 +44,7 @@ export class ClientService {
   }
 
   addDestinatary(destinatary:Destinatary):Observable<Response>{
-    const URL = "http://localhost:5000/bancoripleypoc/us-central1/app/clients/add/destinatary";
+    const URL = "https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/add/destinatary";
     const headers = new HttpHeaders();
 
     headers.append('Access-Control-Allow-Headers', 'Content-Type');

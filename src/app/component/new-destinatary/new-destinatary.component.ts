@@ -8,7 +8,7 @@ import { ResponseDestinataries } from 'src/app/models/ResponseDestinataries';
 
 import { validateRut } from '@fdograph/rut-utilities';
 import {MatDialog} from '@angular/material/dialog';
-import { DialogRutComponent } from '../dialog-rut/dialog-rut.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import { BankDetail } from 'src/app/models/bankDetail';
 import { AccountType } from 'src/app/models/AccountType';
 
@@ -60,8 +60,8 @@ export class NewDestinataryComponent implements OnInit  {
         //Get all destinataries of the client
         this.getDestinataryList();
       },
-      (err)=>{
-        console.error('Error on service getAllBanks');
+      (err:any)=>{
+        console.error('Error on service getAllBanks'+err);
       }
     );
 
@@ -84,7 +84,7 @@ export class NewDestinataryComponent implements OnInit  {
       console.log("Guardado OK");
       this.getDestinataryList();
     },
-    (err)=>{
+    (err:any)=>{
       console.log("Error addDestinatary: "+err);
     }
   );
@@ -98,7 +98,7 @@ export class NewDestinataryComponent implements OnInit  {
       (data:ResponseDestinataries)=>{
         this.destinataries=data.response;
       },
-      (err)=>{
+      (err:any)=>{
         console.log("Error getDestinataries: "+err);
       }
     );
@@ -112,7 +112,13 @@ export class NewDestinataryComponent implements OnInit  {
   if(validateRut(event.target.value)){
   }else{
     this.newDestinataryForm.controls.rut.reset();
-    this.dialog.open(DialogRutComponent);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      data: {title: 'Rut Ingresado no es válido',
+             subtitle:'El rut debe estar en el siguiente formato: 11.111.111-k'
+            }
+    });
+
   }
  }
 

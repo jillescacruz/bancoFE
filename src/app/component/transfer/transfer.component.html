@@ -1,7 +1,7 @@
 
 <mat-card class="example-card">
     <mat-card-header>
-        <mat-card-title>Destinatarios</mat-card-title>
+        <mat-card-title>Ingresa el destinatario</mat-card-title>
     </mat-card-header>
     <mat-card-content>
     <form [formGroup]="transferForm" class="example-form">
@@ -31,7 +31,7 @@
             <p>
                 <mat-form-field appearance="legacy">
                     <mat-label>Monto</mat-label>
-                    <input matInput formControlName="amount" placeholder="Monto">
+                    <input type="number" matInput formControlName="amount" placeholder="Monto" [errorStateMatcher]="matcher">
                 </mat-form-field>
             </p>
 

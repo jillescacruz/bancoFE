@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators,ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BankDetail } from 'src/app/models/bankDetail';
@@ -11,6 +11,10 @@ import { Transfer } from 'src/app/models/Transfer';
 import { ClientService } from 'src/app/services/client.service';
 import { DefaultBanksService } from 'src/app/services/default-banks.service';
 import { TransactionsService } from 'src/app/services/transactions.service';
+import { amountValidator } from 'src/app/validators/CustomValidators';
+import { DefaultErrorMatcher } from 'src/app/common/default.error-matcher';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-transfer',
@@ -19,9 +23,12 @@ import { TransactionsService } from 'src/app/services/transactions.service';
 })
 export class TransferComponent implements OnInit {
 
+  public matcher = new DefaultErrorMatcher();
+
   constructor(private transactionsService:TransactionsService, 
               private clientService:ClientService,
-              private defaultBanksService:DefaultBanksService) { }
+              private defaultBanksService:DefaultBanksService,
+              private dialog:MatDialog) { }
 
   transferForm!: FormGroup;
   myControl = new FormControl();
@@ -35,15 +42,17 @@ export class TransferComponent implements OnInit {
   accountType!:string;
   banks: BankDetail[] = [];
   isLoading:Boolean=false;
+  isValidAmount:Boolean=true;
+
 
 
   ngOnInit(): void {
     this.transferForm = new FormGroup({
-      accountType: new FormControl(),
-      //key: new FormControl('', Validators.required),
-      amount:new FormControl('', Validators.required)
+      //nameView:new FormControl('', Validators.required),
+      amount:new FormControl('', [Validators.required,amountValidator])
     }
     );
+
 
     
     //Getting destinataties data
@@ -78,27 +87,40 @@ export class TransferComponent implements OnInit {
     }
 
   }
+  get amount() {
+    return this.transferForm.get('amount');
+  }
 
   public send(){
     this.isLoading=true;
     let id=localStorage.getItem('rut');
     if(id!=null){
-        const transfer = new Transfer();
-        transfer.rutWithOutVd=id;
-        transfer.key= this.selectedDestinataryKey;
-        transfer.amount=this.transferForm.controls.amount.value;
-        this.transactionsService.transferMoney(transfer).subscribe(
-          (resp:ResponseTransfer)=>{
-            console.log("Transferencia OK: "+resp.totalAmount);
-            this.clientService.setActualTotalAmount(resp.totalAmount);
-            this.isLoading=false;
-            },
-          (error)=>{
-              let obj :ValidationErrors = JSON.parse(JSON.stringify(error.error));
-              console.log("Error transferMoney "+obj.message);
+        if(this.selectedDestinataryKey==null){
+          const dialogRef = this.dialog.open(DialogComponent, {
+            width: '450px',
+            data: {title: 'Faltan campos',
+                   subtitle:'Debe seleccionar un destinatario'
+                  }
+          });
+          this.isLoading=false;
+        }else{
+          const transfer = new Transfer();
+          transfer.rutWithOutVd=id;
+          transfer.key= this.selectedDestinataryKey;
+          transfer.amount=this.transferForm.controls.amount.value;
+          this.transactionsService.transferMoney(transfer).subscribe(
+            (resp:ResponseTransfer)=>{
+              console.log("Transferencia OK: "+resp.totalAmount);
+              this.clientService.setActualTotalAmount(resp.totalAmount);
               this.isLoading=false;
-          }
-        );
+              },
+            (err:any)=>{
+                let obj :ValidationErrors = JSON.parse(JSON.stringify(err.error));
+                console.log("Error transferMoney "+obj.message);
+                this.isLoading=false;
+            }
+          );
+      }
     }
 
   }
