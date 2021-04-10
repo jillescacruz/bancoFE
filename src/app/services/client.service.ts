@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Destinatary } from '../models/Destinatary';
 import { ResponseDestinataries } from '../models/ResponseDestinataries';
 import { ResponseUserData } from '../models/ResponseUserData';
@@ -9,10 +9,20 @@ import { ResponseUserData } from '../models/ResponseUserData';
 })
 export class ClientService {
 
+  private totalAmount=new Subject<number>();
+
   constructor(private http: HttpClient) { }
 
+  setActualTotalAmount(totalAmount:number){
+    this.totalAmount.next(totalAmount);  
+  }
+
+  getActualTotalAmount():Observable<number>{
+    return this.totalAmount.asObservable();  
+  }
+
   getUserData(id:string): Observable<ResponseUserData>{
-    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/clients/get/15840395';
+    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/clients/get/'+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');
@@ -23,7 +33,7 @@ export class ClientService {
   }
 
   getDestinataries(id:string): Observable<ResponseDestinataries>{
-    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/clients/get/destinatary/15840395';
+    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/clients/get/destinatary/'+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');

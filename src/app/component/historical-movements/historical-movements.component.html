@@ -22,12 +22,12 @@
         
             <ng-container matColumnDef="bankCode">
             <th mat-header-cell *matHeaderCellDef> Banco Destino </th>
-            <td mat-cell *matCellDef="let element"> {{element.bankCode}} </td>
+            <td mat-cell *matCellDef="let element"> {{getBankName(element.bankCode)}} </td>
             </ng-container>
         
             <ng-container matColumnDef="accountType">
             <th mat-header-cell *matHeaderCellDef> Tipo de cuenta </th>
-            <td mat-cell *matCellDef="let element"> {{element.accountType}} </td>
+            <td mat-cell *matCellDef="let element"> {{getAccountType(element.accountType)}} </td>
             </ng-container>
         
             <ng-container matColumnDef="amount">

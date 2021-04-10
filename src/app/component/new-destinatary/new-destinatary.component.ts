@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DefaultBanksService } from 'src/app/services/default-banks.service';
 import { ResponseBank } from 'src/app/models/ResponseBank';
 import { Destinatary } from 'src/app/models/Destinatary';
-import { TransactionsService } from 'src/app/services/transactions.service';
 import { ClientService } from 'src/app/services/client.service';
 import { ResponseDestinataries } from 'src/app/models/ResponseDestinataries';
 
@@ -23,20 +22,16 @@ export class NewDestinataryComponent implements OnInit  {
   displayedColumns: string[] = ['name', 'bankCode', 'accountType', 'accountNumber'];
 
   destinataries:Destinatary[]=[];
-
   newDestinataryForm!: FormGroup;
   banks: BankDetail[] = [];
-  accountTypes: AccountType[] = [
-    {value: '1', viewValue: 'Cuenta Corriente'},
-    {value: '2', viewValue: 'Cuenta Vista'},
-    {value: '3', viewValue: 'Cuenta Ahorro'}
-  ];
+  accountTypes:AccountType[]=[];
+
+
 
   selectedValue: string | undefined;
 
 
   constructor(private defaultBanksService: DefaultBanksService, 
-              private transactionsService:TransactionsService,
               private clientService:ClientService,
               private dialog:MatDialog){}
 
@@ -44,6 +39,8 @@ export class NewDestinataryComponent implements OnInit  {
 
   ngOnInit():void{
     console.log("MI RTU ES: "+localStorage.getItem('rut'));
+
+    this.accountTypes=this.defaultBanksService.getAccountTypes();
 
     this.newDestinataryForm = new FormGroup({
       accountType: new FormControl(),
@@ -59,7 +56,6 @@ export class NewDestinataryComponent implements OnInit  {
   
     this.defaultBanksService.getAllBanks().subscribe(
       (data:ResponseBank)=>{
-        console.log("CANTIDAD DE BANCOS:"+data.banks.length);
         this.banks=data.banks;
         //Get all destinataries of the client
         this.getDestinataryList();
@@ -92,20 +88,23 @@ export class NewDestinataryComponent implements OnInit  {
       console.log("Error addDestinatary: "+err);
     }
   );
-   console.log('Enviando......'+destinatary);
  }
 
  //Getting destinataties data
  private getDestinataryList(){
-  this.clientService.getDestinataries('').subscribe(
-    (data:ResponseDestinataries)=>{
-      console.log("CANTIDAD: "+data.response.length);
-      this.destinataries=data.response;
-    },
-    (err)=>{
-      console.log("Error getDestinataries: "+err);
-    }
-  );
+  const id=localStorage.getItem('rut');
+  if(id!=null){
+    this.clientService.getDestinataries(id).subscribe(
+      (data:ResponseDestinataries)=>{
+        this.destinataries=data.response;
+      },
+      (err)=>{
+        console.log("Error getDestinataries: "+err);
+      }
+    );
+  }{
+    console.error('No id founded;');
+  }
  }
 
 
@@ -119,13 +118,11 @@ export class NewDestinataryComponent implements OnInit  {
 
 
  public getBankName(bankCode:string){
-   console.log("CODE"+bankCode);
     return this.banks.filter((bank)=> bank.id==bankCode).map((bank)=>bank.name)
  }
 
  public getAccountType(accountTypeId:string){
-  console.log("CODE"+accountTypeId);
-   return this.accountTypes.filter((accountType)=> accountType.value==accountTypeId).map((accountType)=>accountType.viewValue)
+   return this.defaultBanksService.getAccountTypes().filter((accountType)=> accountType.value==accountTypeId).map((accountType)=>accountType.viewValue)
 }
 
 }

@@ -26,7 +26,7 @@ export class TransactionsService {
   }
 
   getHistoricalMovements(id:string): Observable<ResponseHistoricalMovement>{
-    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/movements/get/history/15840395';
+    const URL = 'http://localhost:5000/bancoripleypoc/us-central1/app/movements/get/history/'+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');

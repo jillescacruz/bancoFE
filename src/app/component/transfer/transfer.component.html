@@ -21,6 +21,12 @@
                     </mat-autocomplete>
                   </mat-form-field>
             </p>
+            <mat-card-content>
+                <p><mat-label>Nombre: {{name}}</mat-label></p>
+                <p><mat-label>Correo: {{email}}</mat-label></p>
+                <p><mat-label>Banco: {{getBankName(bank)}}</mat-label></p>
+                <p><mat-label>Tipo Cuenta: {{getAccountType(accountType)}}</mat-label></p>
+            </mat-card-content>
             
             <p>
                 <mat-form-field appearance="legacy">
@@ -30,7 +36,7 @@
             </p>
 
             <div class="row text-right mt-4">
-                <div class="col-12">
+                <div class="col-12" *ngIf="!isLoading">
                     <button [disabled]="transferForm.invalid" mat-flat-button color="accent" (click)="send()">
                         Transferir
                     </button>

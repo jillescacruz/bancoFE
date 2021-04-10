@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Destinatary } from 'src/app/models/Destinatary';
 import { Movement } from 'src/app/models/Movement';
-import { ResponseDestinataries } from 'src/app/models/ResponseDestinataries';
+import { ResponseBank } from 'src/app/models/ResponseBank';
 import { ResponseHistoricalMovement } from 'src/app/models/ResponseHistoricalMovement';
-import { ClientService } from 'src/app/services/client.service';
 import { TransactionsService } from 'src/app/services/transactions.service';
+import { DefaultBanksService } from 'src/app/services/default-banks.service';
+import { BankDetail } from 'src/app/models/bankDetail';
+import { AccountType } from 'src/app/models/AccountType';
 
 @Component({
   selector: 'app-historical-movements',
@@ -13,21 +14,45 @@ import { TransactionsService } from 'src/app/services/transactions.service';
 })
 export class HistoricalMovementsComponent implements OnInit {
   movements:Movement[]=[];
+  banks: BankDetail[] = [];
+  accountTypes:AccountType[]=[];
+
   displayedColumns: string[] = ['date','name','rutDestinataryWithOutVd','bankCode', 'accountType', 'amount'];
   
-  constructor(private transactionService:TransactionsService) { }
+  constructor(private transactionService:TransactionsService,
+              private defaultBanksService: DefaultBanksService) { }
 
   ngOnInit(): void {
-    
-    this.transactionService.getHistoricalMovements('').subscribe(
-      (data:ResponseHistoricalMovement)=>{
-        console.log("CANTIDAD HISTORICA: "+data.response.length);
-        this.movements=data.response;
-      },
-      (err)=>{
-        console.log("Error getHistoricalMovements: "+err);
-      }
-    );
+    let id=localStorage.getItem('rut');
+     if(id!=null){
+      this.defaultBanksService.getAllBanks().subscribe(
+        (data:ResponseBank)=>{
+          this.banks=data.banks;
+        },
+        (err)=>{
+          console.error('Error on service getAllBanks');
+        }
+      );
+
+
+      this.transactionService.getHistoricalMovements(id).subscribe(
+        (data:ResponseHistoricalMovement)=>{
+          console.log("CANTIDAD HISTORICA: "+data.response.length);
+          this.movements=data.response;
+        },
+        (err)=>{
+          console.log("Error getHistoricalMovements: "+err);
+        }
+      );
+    }
   }
+
+  public getBankName(bankCode:string){
+    return this.banks.filter((bank)=> bank.id==bankCode).map((bank)=>bank.name)
+  }
+
+ public getAccountType(accountTypeId:string){
+   return this.defaultBanksService.getAccountTypes().filter((accountType)=> accountType.value==accountTypeId).map((accountType)=>accountType.viewValue)
+ }
 
 }

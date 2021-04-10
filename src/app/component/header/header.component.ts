@@ -19,22 +19,26 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    localStorage.setItem('rut', '15840395-1JIC');
+    var rutActual="15840395";
+    localStorage.setItem('rut', rutActual);
 
-    this.clientService.getUserData('15840395').subscribe(
+    this.clientService.getUserData(rutActual).subscribe(
       (data:ResponseUserData)=>{
         console.log('USER DATA: '+data);
         this.name=data.userData.name;
         this.amount=data.userData.totalAmount;
-        console.log('USER DATA: '+data.userData.name);
-        console.log('USER DATA: '+data.userData.totalAmount);
+        this.clientService.setActualTotalAmount(data.userData.totalAmount);
       }
       ,(err)=>{
         console.error('Error getUserData: '+err);
       }
     );
 
+    this.clientService.getActualTotalAmount().subscribe((amount)=>{
+      this.amount=amount;
+    });
 
   }
+
 
 }

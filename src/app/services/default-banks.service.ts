@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {environment} from '../../environments/environment';
+import { AccountType } from '../models/AccountType';
 import { ResponseBank } from '../models/ResponseBank';
 
 @Injectable({
@@ -22,4 +23,15 @@ export class DefaultBanksService {
     headers.append('Content-Type', 'application/json');
     return this.http.get<ResponseBank>(URL, {headers});
   }
+
+  getAccountTypes(){
+     var accountTypes: AccountType[] = [
+      {value: '1', viewValue: 'Cuenta Corriente'},
+      {value: '2', viewValue: 'Cuenta Vista'},
+      {value: '3', viewValue: 'Cuenta Ahorro'}
+    ];
+
+    return accountTypes;
+  }
+  
 }
