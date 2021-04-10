@@ -70,8 +70,7 @@ export class NewDestinataryComponent implements OnInit  {
 
  public send(){
   const destinatary = new Destinatary();
-
-  destinatary.rutWithOutVd="15840395";
+  destinatary.rutWithOutVd=localStorage.getItem('rut')!;
   destinatary.name=this.newDestinataryForm.controls.name.value;
   destinatary.email=this.newDestinataryForm.controls.email.value;
   destinatary.phone=this.newDestinataryForm.controls.phone.value;
@@ -92,9 +91,7 @@ export class NewDestinataryComponent implements OnInit  {
 
  //Getting destinataties data
  private getDestinataryList(){
-  const id=localStorage.getItem('rut');
-  if(id!=null){
-    this.clientService.getDestinataries(id).subscribe(
+    this.clientService.getDestinataries(localStorage.getItem('rut')!).subscribe(
       (data:ResponseDestinataries)=>{
         this.destinataries=data.response;
       },
@@ -102,9 +99,7 @@ export class NewDestinataryComponent implements OnInit  {
         console.log("Error getDestinataries: "+err);
       }
     );
-  }{
-    console.error('No id founded;');
-  }
+
  }
 
 

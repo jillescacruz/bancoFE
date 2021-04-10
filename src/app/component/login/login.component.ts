@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ResponseUserData } from 'src/app/models/ResponseUserData';
+import { ClientService } from 'src/app/services/client.service';
 import { LoginService } from 'src/app/services/login.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +15,9 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   isSignedIn:Boolean=false;
-  constructor(public loginService:LoginService) { }
+  constructor(public loginService:LoginService,
+              private dialog:MatDialog,
+              private clientService:ClientService) { }
 
   ngOnInit():void{
     console.log("MI RTU ES: "+localStorage.getItem('rut'));
@@ -33,11 +39,29 @@ export class LoginComponent implements OnInit {
   async send(){
     await this.loginService.singIn(this.loginForm.controls.email.value, this.loginForm.controls.password.value);
     if(this.loginService.isLoggedIn){
-      console.log("WENA WENA!!!")
-      this.isSignedIn=true;
+
+      this.clientService.getUserDataFromEmail(this.loginForm.controls.email.value).subscribe(
+        (data:ResponseUserData)=>{
+          console.log('USER DATA: '+data);
+          this.clientService.setActualTotalAmount(data.userData.totalAmount);
+          this.isSignedIn=true;
+          localStorage.setItem('totalAmount',data.userData.totalAmount.toString());
+          localStorage.setItem('name',data.userData.name.toString());
+          localStorage.setItem('rut',data.userData.rutWithOutVd.toString());
+        }
+        ,(err)=>{
+          console.error('Error getUserData: '+err);
+        }
+      );
+      
     }else{
-      console.log("MALA MALA :(")
       this.isSignedIn=false;
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '450px',
+        data: {title: 'Error',
+               subtitle:'Datos ingresados no son válidos.'
+              }
+      });
     }
   }
 

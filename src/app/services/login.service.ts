@@ -15,6 +15,7 @@ export class LoginService {
       res=>{
       this.isLoggedIn=true;
       localStorage.setItem('user', JSON.stringify(res.user));
+      console.log('user: '+ JSON.stringify(res.user))
     },
     err=>{this.isLoggedIn=false;}
     )
@@ -26,5 +27,6 @@ logout(){
   this.firebaseAuth.signOut();
   localStorage.removeItem('user');
 }
+
 
 }

@@ -3,4 +3,5 @@ export class UserData{
     email!:string;
     rutWithOutVd!:string;
     totalAmount!:number;
+    token!:string
 }

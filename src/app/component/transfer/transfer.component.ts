@@ -52,13 +52,9 @@ export class TransferComponent implements OnInit {
       amount:new FormControl('', [Validators.required,amountValidator])
     }
     );
-
-
     
     //Getting destinataties data
-    const id=localStorage.getItem('rut');
-    if(id!=null){
-      this.clientService.getDestinataries(id).subscribe(
+      this.clientService.getDestinataries(localStorage.getItem('rut')!).subscribe(
         (data:ResponseDestinataries)=>{
           console.log("CANTIDAD: "+data.response.length);
           this.destinataries=data.response;
@@ -84,7 +80,6 @@ export class TransferComponent implements OnInit {
             console.error('Error on service getAllBanks');
           }
         );
-    }
 
   }
   get amount() {

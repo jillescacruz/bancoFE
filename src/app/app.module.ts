@@ -31,6 +31,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogComponent } from './component/dialog/dialog.component';
 import { AngularFireModule } from '@angular/fire';
 import { LoginComponent } from './component/login/login.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { LoginComponent } from './component/login/login.component';
     MatAutocompleteModule,
     MatCardModule,
     MatDialogModule,
+    FlexLayoutModule,
     AngularFireModule.initializeApp({apiKey: "AIzaSyBAwIAS1jMCl94tTBSYiIDKi9nj9fSuPdw",
     authDomain: "bancoripleypoc.firebaseapp.com",
     projectId: "bancoripleypoc",

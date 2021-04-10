@@ -14,6 +14,7 @@ export class ClientService {
   constructor(private http: HttpClient) { }
 
   setActualTotalAmount(totalAmount:number){
+    console.log("TOTAL AMOUNT: "+totalAmount);
     this.totalAmount.next(totalAmount);  
   }
 
@@ -23,6 +24,17 @@ export class ClientService {
 
   getUserData(id:string): Observable<ResponseUserData>{
     const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/'+id;
+    const headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Headers', 'Content-Type');
+    headers.append('Access-Control-Allow-Methods', 'GET');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Content-Type', 'application/json');
+    console.log('llamando a getUserData');
+    return this.http.get<ResponseUserData>(URL, {headers});
+  }
+
+  getUserDataFromEmail(email:string): Observable<ResponseUserData>{
+    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/email/'+email;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');

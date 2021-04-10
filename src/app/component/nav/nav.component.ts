@@ -24,7 +24,6 @@ export class NavComponent {
   constructor(private breakpointObserver: BreakpointObserver, private loginService:LoginService) {}
 
   logOut(){
-    console.log("LOGOUT!!!---");
     this.loginService.logout();
     this.isLogout.emit();
   }
