@@ -1,0 +1,29 @@
+<mat-card *ngIf="!isSignedIn">
+    <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="loginForm">
+                <p>
+                    <mat-form-field appearance="legacy">
+                        <mat-label>correo</mat-label>
+                        <input  type="text" formControlName="email" matInput placeholder="Email">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="legacy">
+                        <mat-label>Password</mat-label>
+                        <input type="password" formControlName="password" matInput placeholder="Password" >
+                    </mat-form-field>
+                </p>
+                <div class="row text-right mt-4">
+                    <div class="col-12">
+                        <button [disabled]="loginForm.invalid" mat-flat-button color="accent" (click)="send()">
+                            Entrar
+                        </button>
+                    </div>
+                </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+<app-nav *ngIf="isSignedIn" (isLogout)="handleLogout()"></app-nav>

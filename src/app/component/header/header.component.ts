@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ResponseUserData } from 'src/app/models/ResponseUserData';
-import { UserData } from 'src/app/models/UserData';
 import { ClientService } from 'src/app/services/client.service';
-import { TransactionsService } from 'src/app/services/transactions.service';
+import { LoginService } from 'src/app/services/login.service';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,11 @@ export class HeaderComponent implements OnInit {
   amount!:number;
   userData!:ResponseUserData;
 
-  constructor(private clientService:ClientService) { }
+
+  constructor(private clientService:ClientService, 
+              public loginService:LoginService,
+              private router:Router
+              ) { }
 
   ngOnInit(): void {
 
@@ -39,6 +43,9 @@ export class HeaderComponent implements OnInit {
     });
 
   }
+
+
+  
 
 
 }
