@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ResponseHistoricalMovement } from '../models/ResponseHistoricalMovement';
 import { ResponseTransfer } from '../models/ResponseTransfer';
 import { Transfer } from '../models/Transfer';
+import {environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class TransactionsService {
 
 
   transferMoney(transfer:Transfer):Observable<ResponseTransfer>{
-    const URL = "https://us-central1-bancoripleypoc.cloudfunctions.net/app/movements/transfer/";
+    const URL = environment.transfer;
     const headers = new HttpHeaders();
 
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
@@ -26,7 +27,7 @@ export class TransactionsService {
   }
 
   getHistoricalMovements(id:string): Observable<ResponseHistoricalMovement>{
-    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/movements/get/history/'+id;
+    const URL = environment.getHistory+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');

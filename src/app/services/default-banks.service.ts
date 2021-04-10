@@ -14,7 +14,7 @@ export class DefaultBanksService {
 
 
   getAllBanks(): Observable<ResponseBank>{
-    const URL = 'https://bast.dev/api/banks.php';
+    const URL = environment.bankList;
     const headers = new HttpHeaders();
     console.log('llamando a bancos');
     headers.append('Access-Control-Allow-Headers', 'Content-Type');

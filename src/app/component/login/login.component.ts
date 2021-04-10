@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
   async send(){
     await this.loginService.singIn(this.loginForm.controls.email.value, this.loginForm.controls.password.value);
     if(this.loginService.isLoggedIn){
-
       this.clientService.getUserDataFromEmail(this.loginForm.controls.email.value).subscribe(
         (data:ResponseUserData)=>{
           console.log('USER DATA: '+data);

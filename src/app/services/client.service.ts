@@ -4,6 +4,9 @@ import { Observable, Subject } from 'rxjs';
 import { Destinatary } from '../models/Destinatary';
 import { ResponseDestinataries } from '../models/ResponseDestinataries';
 import { ResponseUserData } from '../models/ResponseUserData';
+import {environment} from '../../environments/environment'
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +26,7 @@ export class ClientService {
   }
 
   getUserData(id:string): Observable<ResponseUserData>{
-    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/'+id;
+    const URL = environment.getUserDataFromRut+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');
@@ -34,7 +37,7 @@ export class ClientService {
   }
 
   getUserDataFromEmail(email:string): Observable<ResponseUserData>{
-    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/email/'+email;
+    const URL = environment.getUserDataFromEmail+email;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');
@@ -45,7 +48,7 @@ export class ClientService {
   }
 
   getDestinataries(id:string): Observable<ResponseDestinataries>{
-    const URL = 'https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/get/destinatary/'+id;
+    const URL = environment.getDestinataries+id;
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET');
@@ -56,7 +59,7 @@ export class ClientService {
   }
 
   addDestinatary(destinatary:Destinatary):Observable<Response>{
-    const URL = "https://us-central1-bancoripleypoc.cloudfunctions.net/app/clients/add/destinatary";
+    const URL = environment.addDestinatary;
     const headers = new HttpHeaders();
 
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
