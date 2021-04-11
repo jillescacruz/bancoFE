@@ -1,6 +1,6 @@
 export class Destinatary{
     key!:string;
-    rutWithOutVd!:string;
+    rutOriginWithOutVd!:string;
     name!:string;
     email!:string;
     phone!:string;

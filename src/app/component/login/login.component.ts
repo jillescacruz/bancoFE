@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
               private clientService:ClientService) { }
 
   ngOnInit():void{
-    console.log("MI RTU ES: "+localStorage.getItem('rut'));
     this.loginForm = new FormGroup({
       accountType: new FormControl(),
       email: new FormControl('', Validators.required),

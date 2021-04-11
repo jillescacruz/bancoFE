@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -32,6 +32,7 @@ import { DialogComponent } from './component/dialog/dialog.component';
 import { AngularFireModule } from '@angular/fire';
 import { LoginComponent } from './component/login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { InterceptorService } from './services/interceptor.service';
 
 
 @NgModule({
@@ -74,7 +75,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     appId: "1:367778702077:web:395d9090a0eb81917e9494",
     measurementId: "G-WGSQ3BK76Y"})    
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptorService,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

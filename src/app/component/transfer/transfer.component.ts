@@ -121,7 +121,6 @@ export class TransferComponent implements OnInit {
   }
 
   private _filter(value: string): Destinatary[] {
-    console.log("VALUE: "+value);
     const filterValue = value.toLowerCase();
 
     return this.destinataries.filter(option => option.name.toLowerCase().includes(filterValue));

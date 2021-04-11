@@ -38,7 +38,6 @@ export class NewDestinataryComponent implements OnInit  {
 
 
   ngOnInit():void{
-    console.log("MI RTU ES: "+localStorage.getItem('rut'));
 
     this.accountTypes=this.defaultBanksService.getAccountTypes();
 
@@ -70,7 +69,7 @@ export class NewDestinataryComponent implements OnInit  {
 
  public send(){
   const destinatary = new Destinatary();
-  destinatary.rutWithOutVd=localStorage.getItem('rut')!;
+  destinatary.rutOriginWithOutVd=localStorage.getItem('rut')!;
   destinatary.name=this.newDestinataryForm.controls.name.value;
   destinatary.email=this.newDestinataryForm.controls.email.value;
   destinatary.phone=this.newDestinataryForm.controls.phone.value;
