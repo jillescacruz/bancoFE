@@ -56,7 +56,6 @@ export class TransferComponent implements OnInit {
     //Getting destinataties data
       this.clientService.getDestinataries(localStorage.getItem('rut')!).subscribe(
         (data:ResponseDestinataries)=>{
-          console.log("CANTIDAD: "+data.response.length);
           this.destinataries=data.response;
         },
         (err)=>{
@@ -76,7 +75,8 @@ export class TransferComponent implements OnInit {
             this.banks=data.banks;
           },
           (err)=>{
-            console.error('Error on service getAllBanks');
+            let obj :ValidationErrors = JSON.parse(JSON.stringify(err.error));
+            console.log("Error transferMoney "+obj.message);
           }
         );
 
@@ -105,18 +105,26 @@ export class TransferComponent implements OnInit {
           this.transactionsService.transferMoney(transfer).subscribe(
             (resp:ResponseTransfer)=>{
               console.log("Transferencia OK: "+resp.totalAmount);
+              this.clientService.setActualTotalAmount(resp.totalAmount);
+              localStorage.setItem('totalAmount',resp.totalAmount.toString())
+              this.isLoading=false;
               const dialogRef = this.dialog.open(DialogComponent, {
                 width: '450px',
                 data: {title: 'Transferencia',
                        subtitle:'Se ha realizado la transferencia exitosamente.'
                       }
               });
-              this.clientService.setActualTotalAmount(resp.totalAmount);
-              this.isLoading=false;
+              this.transferForm.reset();
               },
             (err:any)=>{
                 let obj :ValidationErrors = JSON.parse(JSON.stringify(err.error));
                 console.log("Error transferMoney "+obj.message);
+                const dialogRef = this.dialog.open(DialogComponent, {
+                  width: '450px',
+                  data: {title: 'Error',
+                         subtitle:'Error al realizar la transferencia.'
+                        }
+                });
                 this.isLoading=false;
             }
           );

@@ -10,18 +10,23 @@
                 <td mat-cell *matCellDef="let element"> {{element.date | date :'short'}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Tipo Movimiento</th>
+                <td mat-cell *matCellDef="let element"> {{getTypeDescription(element.type)}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nombre Destinatario</th>
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
         
             <ng-container matColumnDef="rutDestinataryWithOutVd">
-            <th mat-header-cell *matHeaderCellDef> Rut Destinatario </th>
+            <th mat-header-cell *matHeaderCellDef> Rut  </th>
             <td mat-cell *matCellDef="let element"> {{element.rutDestinataryWithOutVd}} </td>
             </ng-container>
         
             <ng-container matColumnDef="bankCode">
-            <th mat-header-cell *matHeaderCellDef> Banco Destino </th>
+            <th mat-header-cell *matHeaderCellDef> Banco  </th>
             <td mat-cell *matCellDef="let element"> {{getBankName(element.bankCode)}} </td>
             </ng-container>
         
@@ -34,7 +39,6 @@
                 <th mat-header-cell *matHeaderCellDef> Monto </th>
                 <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
             </ng-container>
-
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -17,7 +17,7 @@ export class HistoricalMovementsComponent implements OnInit {
   banks: BankDetail[] = [];
   accountTypes:AccountType[]=[];
 
-  displayedColumns: string[] = ['date','name','rutDestinataryWithOutVd','bankCode', 'accountType', 'amount'];
+  displayedColumns: string[] = ['date','type','name','rutDestinataryWithOutVd','bankCode', 'accountType', 'amount'];
   
   constructor(private transactionService:TransactionsService,
               private defaultBanksService: DefaultBanksService) { }
@@ -37,7 +37,6 @@ export class HistoricalMovementsComponent implements OnInit {
 
       this.transactionService.getHistoricalMovements(id).subscribe(
         (data:ResponseHistoricalMovement)=>{
-          console.log("CANTIDAD HISTORICA: "+data.response.length);
           this.movements=data.response;
         },
         (err)=>{
@@ -53,6 +52,16 @@ export class HistoricalMovementsComponent implements OnInit {
 
  public getAccountType(accountTypeId:string){
    return this.defaultBanksService.getAccountTypes().filter((accountType)=> accountType.value==accountTypeId).map((accountType)=>accountType.viewValue)
+ }
+
+ public getTypeDescription(type:string){
+    if(type==='DEPOSIT'){
+      return "DEPOSITO"
+    }else if(type==="TRANSFER_TO"){
+      return "TRANSFERENCIA A"
+    }else{
+      return "TRANSFERENCIA DESDE"
+    }
  }
 
 }

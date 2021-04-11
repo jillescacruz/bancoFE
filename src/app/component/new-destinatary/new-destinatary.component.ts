@@ -87,13 +87,14 @@ export class NewDestinataryComponent implements OnInit  {
                subtitle:'Nuevo destinatario creado exitosamente.'
               }
       });
+      this.newDestinataryForm.reset();
       this.getDestinataryList();
     },
     (err:any)=>{
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '450px',
         data: {title: 'Error',
-               subtitle:'Ocurrió un error al realizar la transferencia: .'
+               subtitle:'Ocurrió un error al generar el nuevo destinatario: .'
               }
       });
       console.log("Error addDestinatary: "+err);

@@ -33,7 +33,6 @@ export class TransactionsService {
     headers.append('Access-Control-Allow-Methods', 'GET');
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'application/json');
-    console.log('llamando a getDestinataries');
     return this.http.get<ResponseHistoricalMovement>(URL, {headers});
   }
 

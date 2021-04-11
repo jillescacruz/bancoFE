@@ -16,7 +16,6 @@ export class DefaultBanksService {
   getAllBanks(): Observable<ResponseBank>{
     const URL = environment.bankList;
     const headers = new HttpHeaders();
-    console.log('llamando a bancos');
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'POST');
     headers.append('Access-Control-Allow-Origin', '*');

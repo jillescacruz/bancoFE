@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
-
     if(null!==localStorage.getItem('totalAmount')){
       this.amount=Number(localStorage.getItem('totalAmount'));
     }

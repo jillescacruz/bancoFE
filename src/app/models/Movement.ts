@@ -5,5 +5,6 @@ export class Movement{
     rutDestinataryWithOutVd!:string;
     accountType!:string;
     amount!:number;
-    date!:Date
+    date!:Date;
+    type!:string;
 }
