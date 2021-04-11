@@ -25,6 +25,9 @@ export class InterceptorService implements HttpInterceptor {
         request = req.clone({
           setHeaders: {
             authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
           },
         });
       }

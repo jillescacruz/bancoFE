@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
     if(this.loginService.isLoggedIn){
       this.clientService.getUserDataFromEmail(this.loginForm.controls.email.value).subscribe(
         (data:ResponseUserData)=>{
-          console.log('USER DATA: '+data);
           this.clientService.setActualTotalAmount(data.userData.totalAmount);
           this.isSignedIn=true;
           localStorage.setItem('totalAmount',data.userData.totalAmount.toString());

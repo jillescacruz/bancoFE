@@ -17,7 +17,6 @@ export class ClientService {
   constructor(private http: HttpClient) { }
 
   setActualTotalAmount(totalAmount:number){
-    console.log("TOTAL AMOUNT: "+totalAmount);
     this.totalAmount.next(totalAmount);  
   }
 
@@ -28,45 +27,24 @@ export class ClientService {
   getUserData(id:string): Observable<ResponseUserData>{
     const URL = environment.getUserDataFromRut+id;
     const headers = new HttpHeaders();
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-    console.log('llamando a getUserData');
     return this.http.get<ResponseUserData>(URL, {headers});
   }
 
   getUserDataFromEmail(email:string): Observable<ResponseUserData>{
     const URL = environment.getUserDataFromEmail+email;
     const headers = new HttpHeaders();
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-    console.log('llamando a getUserData');
     return this.http.get<ResponseUserData>(URL, {headers});
   }
 
   getDestinataries(id:string): Observable<ResponseDestinataries>{
     const URL = environment.getDestinataries+id;
     const headers = new HttpHeaders();
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-    console.log('llamando a getDestinataries');
     return this.http.get<ResponseDestinataries>(URL, {headers});
   }
 
   addDestinatary(destinatary:Destinatary):Observable<Response>{
     const URL = environment.addDestinatary;
     const headers = new HttpHeaders();
-
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'POST');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/json');
-
     return this.http.post<Response>(URL, destinatary, {headers});
   }
 }
