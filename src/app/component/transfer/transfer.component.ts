@@ -73,7 +73,6 @@ export class TransferComponent implements OnInit {
 
         this.defaultBanksService.getAllBanks().subscribe(
           (data:ResponseBank)=>{
-            console.log("CANTIDAD DE BANCOS:"+data.banks.length);
             this.banks=data.banks;
           },
           (err)=>{
@@ -106,6 +105,12 @@ export class TransferComponent implements OnInit {
           this.transactionsService.transferMoney(transfer).subscribe(
             (resp:ResponseTransfer)=>{
               console.log("Transferencia OK: "+resp.totalAmount);
+              const dialogRef = this.dialog.open(DialogComponent, {
+                width: '450px',
+                data: {title: 'Transferencia',
+                       subtitle:'Se ha realizado la transferencia exitosamente.'
+                      }
+              });
               this.clientService.setActualTotalAmount(resp.totalAmount);
               this.isLoading=false;
               },

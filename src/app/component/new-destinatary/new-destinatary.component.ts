@@ -25,6 +25,8 @@ export class NewDestinataryComponent implements OnInit  {
   newDestinataryForm!: FormGroup;
   banks: BankDetail[] = [];
   accountTypes:AccountType[]=[];
+  private isValidEmail= /\S+@\S+\.\S+/;
+  private isValidPhoneNumber= /\S+@\S+\.\S+/;
 
 
 
@@ -45,7 +47,7 @@ export class NewDestinataryComponent implements OnInit  {
       accountType: new FormControl(),
       name: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required,Validators.pattern(this.isValidEmail)]),
       rut: new FormControl('', Validators.required),
       bank: new FormControl('', Validators.required),
       accountNumber:new FormControl('', Validators.required)
@@ -79,10 +81,21 @@ export class NewDestinataryComponent implements OnInit  {
   destinatary.rutDestinataryWithOutVd=this.newDestinataryForm.controls.rut.value;
   this.clientService.addDestinatary(destinatary).subscribe(
     (resp:Response)=>{
-      console.log("Guardado OK");
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '450px',
+        data: {title: 'Nuevo Destinatario',
+               subtitle:'Nuevo destinatario creado exitosamente.'
+              }
+      });
       this.getDestinataryList();
     },
     (err:any)=>{
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '450px',
+        data: {title: 'Error',
+               subtitle:'Ocurrió un error al realizar la transferencia: .'
+              }
+      });
       console.log("Error addDestinatary: "+err);
     }
   );
