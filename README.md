@@ -1,27 +1,49 @@
 # BancoFE
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
+Proyecto realizado como pruebas de transferencia de dinero entre cuentas de destinatario.
 
-## Development server
+Fue generado con  [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+El aplicativo actualmente posee 3 modulos:
+1)Agregar destinatarios
+    - Permite agregar destinatarios para próximas transferencias.
+2)Transferencia
+    - Permite seleccionar uno de los destinatarios creados en el primer punto.
+    - Se valida que monto total a transferir no sea mayor a lo que el cliente tiene en su cuenta.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3)Histórico de movimientos
+    - Permite visualizar los datos de los movimientos que se han realizado.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+------ Flujo y Validaciones ------
+¿Cómo comenzar?
+Se crearon 2 clientes a modo de pruebas para que se puedan realizar transferencias a otras personas o entre ellos.
+Usuario/pass:  denzel@denzel.com/denzel@denzel.com
+Usuario/pass:  scarlett@scarlett.com/scarlett@scarlett.com
 
-## Running unit tests
+Cada usuario posee una cantidad de dinero ya asiganada, la cual se puede transferir a otros destinatarios o entre ellos.
+Cabe destacar que al transferir dinero a otros destinatarios(no entre ellos) ese dinero se perderá.
+Aun así, si se necesita cargar dinero, existe un servicio en el backEnd en donde se puede cargar, ejecutando directamente el servicio(no frontEnd).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+El flujo actual de transferencia valida si el destinatario seleccionado pertenece a uno de los clientes actualmente creados. Es decir que si la transferencias es entre cliente, a ambas personas les aparecerá el movimiento. Uno de recepción y el otro de envío.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+La url para ingresar al aplicativo es:
 
-## Further help
+https://bancoripleypoc.web.app/
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+Para su ejecución en ambiente local se debe desplegar ejecutando:
+`ng serve`
+y se levantará en `http://localhost:4200/`.
+
+
+
+Consideraciones:
+- El servicio de bancos (https://bast.dev/api/banks.php) tiene código de bancos duplicados, por lo que se desplegará mas de 1 opción por pantalla.
+- Faltan pruebas unitarias
+- El logín es en base a mail/password y pueden ser creados en firebase/Authentication
+- El hosting en donde se encuentra el aplicativo es firebase( Hosting)
+- La base de datos es Firestore y utiliza los siguientes indices (Collection: movements	; Campo: rutWithOutVd Ascendente; Campo 2: date Descendente)
