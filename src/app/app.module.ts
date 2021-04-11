@@ -67,13 +67,13 @@ import { InterceptorService } from './services/interceptor.service';
     MatCardModule,
     MatDialogModule,
     FlexLayoutModule,
-    AngularFireModule.initializeApp({apiKey: "AIzaSyBAwIAS1jMCl94tTBSYiIDKi9nj9fSuPdw",
+    AngularFireModule.initializeApp({apiKey: "XXXX",
     authDomain: "bancoripleypoc.firebaseapp.com",
     projectId: "bancoripleypoc",
     storageBucket: "bancoripleypoc.appspot.com",
     messagingSenderId: "367778702077",
-    appId: "1:367778702077:web:395d9090a0eb81917e9494",
-    measurementId: "G-WGSQ3BK76Y"})    
+    appId: "1:XXXX:web:XXXX",
+    measurementId: "G-XX"})    
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
